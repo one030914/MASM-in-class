@@ -14,25 +14,25 @@ nums byte 5 dup(?)
 
 .code
 main PROC
-	;init
+
 	mov ecx, lengthof nums
 	mov edi, type nums
 	mov eax, 0
 	mov edi, 0
 
-L1:
+L1: ;save array
 	mov eax, 50
 	call RandomRange
 	mov nums[edi], al
 	add edi, type nums
 	loop L1
 
-	mov edi, offset nums
+	mov ecx, lengthof nums
+	mov edi, type nums
 	mov eax, 0
 	mov edi, 0
-	mov ecx, lengthof nums
 
-L2:
+L2: ;load array
 	mov al, nums[edi]
 	add edi, type nums
 	call WriteInt
