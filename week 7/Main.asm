@@ -30,9 +30,9 @@ main proc
 L1:
 	mov var1, 33
 	cmp cl, dl
-	jne Next
+	jne Endif
 	mov var1, 55
-Next:
+Endif:
 	mov eax, 0
 	mov ax, var1
 	call WriteInt

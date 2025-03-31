@@ -10,9 +10,10 @@ include Irvine32.inc
 ExitProcess PROTO, dwExitCode:DWORD
 
 .data
-n sword ?
 ary0317_u1224051 word 6 dup(?)
 len word ($ - ary0317_u1224051) / 2
+sum word 0
+string byte "Sum of array's gap: ", 0
 
 .code
 Init proc
@@ -24,6 +25,19 @@ Init proc
 
 Init endp
 
+Compare proc
+
+	cmp ax, 0
+	jnl Next
+	not ax
+	inc ax
+
+Next:
+	add sum, ax
+	ret
+
+Compare endp
+
 main proc
 
 	call Init
@@ -33,35 +47,22 @@ Random:
 	call RandomRange
 	add eax, 1
 	mov [esi], ax
-	add esi, type ary0317_u1224051
+	add esi, type word
 	loop Random
 
-	call Crlf
-	call Init
-
-Print:
-	mov ax, [esi]
-	call WriteInt
-	call Crlf
-	add esi, type ary0317_u1224051
-	loop Print
-
-	call Crlf
 	call Init
 	dec ecx
 
 L1:
 	mov ax, word ptr [esi]
-	add esi, type ary0317_u1224051
+	add esi, type word
 	sub ax, word ptr [esi]
-	cmp ax, 0
-	jg Greater
-	jl Less
+	call Compare
+	loop L1
 
-Greater:
-	call WriteInt
-	call Crlf
-Less:
+	mov edx, offset string
+	call WriteString
+	movzx eax, sum
 	call WriteInt
 	call Crlf
 
