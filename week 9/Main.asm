@@ -20,10 +20,10 @@ ExitProcess PROTO, dwExitCode:DWORD
 	mydiff_u1224051 dword 8 dup(?)
 	ary_len dword ($ - mydiff_u1224051) / 4
 	ary_str byte "Random list: ", 0
-	odd_str byte "Odd Sum: ", 0
-	odd_cnt byte 0
-	even_str byte "Even Sum: ", 0
-	even_cnt byte 0
+	odd_str byte "Odd index Sum: ", 0
+	odd_v dword 0
+	even_str byte "Even index Sum: ", 0
+	even_v dword 0
 
 	Rval byte ?
 	r_str byte "Rval: ", 0
@@ -35,34 +35,6 @@ ExitProcess PROTO, dwExitCode:DWORD
 	z_str byte "Zval: ", 0
 
 .code
-
-odd_even proc
-
-	mov eax, 0
-	mov ebx, 0
-	mov ecx, ary_len
-	mov esi, offset mydiff_u1224051
-
-L1:
-	test dword ptr [esi], 0001b
-	jne Even_
-
-Odd_:
-	add eax, dword ptr [esi]
-	jmp next
-
-Even_:
-	add ebx, dword ptr [esi]
-	
-next:
-	add esi, type dword
-
-	loop L1
-
-	ret
-
-odd_even endp
-
 main PROC
 	mov eax, 0
 	mov ebx, 0
@@ -100,21 +72,28 @@ load:
 	call Crlf
 	mov eax, 0
 	push eax
-	mov ecx, 4
+	mov ecx, ary_len
 	push ecx
-	mov esi, offset mydiff_u1224051
+	mov esi, 0
 
 random:
 	mov eax, 250
 	call RandomRange
 	inc eax
-	call DumpRegs
+	mov mydiff_u1224051[esi], eax
+	test esi, 0100b
+	jne Odd_
 
+Even_:
+	add even_v, eax
+	jmp next
 
-	mov dword ptr [esi], eax
+Odd_:
+	add odd_v, eax
+
+next:
 	add esi, type dword
 	loop random
-
 
 	pop ecx
 	pop eax
@@ -133,10 +112,14 @@ aryout:
 
 	mov edx, offset even_str
 	call WriteString
+	mov eax, even_v
+	call WriteInt
 	call Crlf
 
 	mov edx, offset odd_str
 	call WriteString
+	mov eax, odd_v
+	call WriteInt
 	call Crlf
 	call Crlf
 
