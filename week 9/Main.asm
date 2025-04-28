@@ -10,13 +10,11 @@ include Irvine32.inc
 ExitProcess PROTO, dwExitCode:DWORD
 
 .data
-	Q1 BYTE "==Q1=========================",0
-	Q2 BYTE "==Q2=========================",0
-	Q3 BYTE "==Q3=========================",0
-
+	Q1 BYTE "==Q1=========================",
 	sname byte "nuu_GarryAdam", 0
 	n_len dword ($ - sname) - 1
 
+	Q2 BYTE "==Q2=========================",0
 	mydiff_u1224051 dword 8 dup(?)
 	ary_len dword ($ - mydiff_u1224051) / 4
 	ary_str byte "Random list: ", 0
@@ -25,6 +23,7 @@ ExitProcess PROTO, dwExitCode:DWORD
 	even_str byte "Even index Sum: ", 0
 	even_v dword 0
 
+	Q3 BYTE "==Q3=========================",0
 	Rval byte ?
 	r_str byte "Rval: ", 0
 	Xval byte 10
@@ -36,6 +35,7 @@ ExitProcess PROTO, dwExitCode:DWORD
 
 .code
 main PROC
+	;init
 	mov eax, 0
 	mov ebx, 0
 	mov ecx, n_len
@@ -47,6 +47,7 @@ main PROC
 	call Crlf
 	mov esi, offset sname
 
+	;Q1
 save:
 	mov eax, [esi]
 	push eax
@@ -76,12 +77,13 @@ load:
 	push ecx
 	mov esi, 0
 
+	;Q2
 random:
 	mov eax, 250
 	call RandomRange
 	inc eax
 	mov mydiff_u1224051[esi], eax
-	test esi, 0100b
+	test ecx, 1
 	jne Odd_
 
 Even_:
@@ -123,6 +125,7 @@ aryout:
 	call Crlf
 	call Crlf
 
+	;Q3
 	mov eax, 0
 	mov ebx, 0
 	mov ecx, 0
