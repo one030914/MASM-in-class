@@ -16,7 +16,7 @@
 
 右鍵專案名稱 -> 加入 -> 新增項目 -> 輸入檔名 -> `[name].asm`
 
-右鍵asm檔 -> 屬性 -> 一般 -> 項目類型 -> Microsoft Marco Assembler
+右鍵 asm 檔 -> 屬性 -> 一般 -> 項目類型 -> Microsoft Marco Assembler
 
 右鍵專案名稱 -> 屬性 -> Microsoft Marco Assembler -> General -> Include Paths -> 編輯 -> 輸入 `C:\Irvine`
 
