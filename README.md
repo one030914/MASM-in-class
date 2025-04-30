@@ -4,7 +4,7 @@
 
 ### Irvine
 
-下載 [Irvine library](https://github.com/surferkip/asmbook)，解壓縮 `Irvine.zip` 到C根目錄下 -> `C:\Irvine`
+下載 [Irvine library](https://github.com/surferkip/asmbook)，解壓縮 `Irvine.zip` 到 C 槽根目錄下 -> `C:\Irvine`
 
 ### VS 2022
 
